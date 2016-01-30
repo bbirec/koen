@@ -1,6 +1,13 @@
+const path = require('path');
+const remote = require('electron').remote;
+const app = remote.app;
 const low = require('lowdb')
+
+var dbFile = path.join(app.getPath('userData'), "/db.json");
+console.log("DB path:", dbFile);
+
 const storage = require('lowdb/file-sync')
-const db = low('db.json', { storage })
+const db = low(dbFile, { storage })
 var uuid = require('node-uuid');
 var _ = require('lodash');
 

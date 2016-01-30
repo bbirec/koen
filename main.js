@@ -16,17 +16,29 @@ app.on('window-all-closed', function() {
   }
 });
 
+app.on('activate', function() {
+  openMainWindow();
+})
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
+  openMainWindow();
+  require('./menu');
+});
+
+
+function openMainWindow() {
+  if(mainWindow) {
+    mainWindow.show();
+    return;
+  }
+
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({width: 950, height: 800});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -35,4 +47,4 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-});
+}
