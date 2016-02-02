@@ -102,6 +102,7 @@ var Exercise = React.createClass({
   getInitialState: function() {
     return {
       ref: db(DB_REFS).find({id: this.props.refId}),
+      showRef: false,
       first: "", 
       second: "", 
       third:""};
@@ -123,30 +124,57 @@ var Exercise = React.createClass({
       texts: texts,
       date: moment()});
 
-    this.props.onDashBoard();
+    this.setState({showRef: true});
   },
   render: function() {
+    var buttons;
+    if(this.state.showRef) {
+      buttons = (
+        <div>
+          <button type="button" className="pure-button" onClick={this.props.onDashBoard}>완료</button>
+        </div>
+      );
+    }
+    else {
+      var allWritten = this.state.first && this.state.second && this.state.third;
+      buttons = (
+        <div>
+          <button type="button" className="pure-button pure-button-primary" onClick={this.onAdd} disabled={!allWritten}>입력하기</button>
+          <button type="button" className="pure-button" onClick={this.props.onDashBoard}>취소</button>
+        </div>
+      );
+    }
+
+    var en;
+    if(this.state.showRef) {
+      en = (<h2>{this.state.ref.en}</h2>);
+    }
+
     return (
       <div className="exercise">
 
         <h2>{this.state.ref.ko}</h2>
+
         <form className="pure-form pure-form-stacked">
           <label>첫번째 시도</label>
           <textarea placeholder="첫번째 시도"
             value={this.state.first}
-            onChange={this.onChange.bind(this, "first")}></textarea>
+            onChange={this.onChange.bind(this, "first")}
+            disabled={this.state.showRef}></textarea>
           <label>두번째 시도</label>
           <textarea placeholder="두번째 시도"
             value={this.state.second}
-            onChange={this.onChange.bind(this, "second")}></textarea>
+            onChange={this.onChange.bind(this, "second")}
+            disabled={this.state.showRef}></textarea>
           <label>세번째 시도</label>
           <textarea placeholder="세번째 시도"
             value={this.state.third}
-            onChange={this.onChange.bind(this, "third")}></textarea>  
-          <div>
-            <button type="button" className="pure-button pure-button-primary" onClick={this.onAdd}>입력하기</button>
-            <button type="button" className="pure-button" onClick={this.props.onDashBoard}>취소</button>
-          </div>
+            onChange={this.onChange.bind(this, "third")}
+            disabled={this.state.showRef}></textarea>  
+
+          {en}
+
+          {buttons}
         </form>
       </div>
     )
