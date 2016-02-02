@@ -67,7 +67,7 @@ var ListRef = React.createClass({
     return (
       <div>
         <button type="button" className="pure-button" onClick={this.props.onDashBoard}>돌아가기</button>
-        <table className="pure-table">
+        <table className="pure-table text">
           <thead>
             <tr>
               <td>#</td>
@@ -267,7 +267,7 @@ var Dashboard = React.createClass({
         </div>
         <div>
           <h2>나의 영어 일지({moment().year()}년 {moment().month()+1}월)</h2>
-          <table className="pure-table">
+          <table className="pure-table text">
             <thead>
               <tr>
                 <td>날짜</td>
